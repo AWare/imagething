@@ -9,9 +9,9 @@ Where approximately a third of the 100px sqaure tiles will be filled in.
 
 Demo
 ----
-Input:
+###Input:
 ![Old image](https://github.com/AWare/imagething/raw/master/old.jpg)
 
 `./imagething old.jpg new.png 3 150`
-Output:
+###Output:
 ![New Image](https://github.com/AWare/imagething/raw/master/new.png)
