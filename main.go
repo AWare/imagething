@@ -17,13 +17,17 @@ import (
 
 func main() {
 
-	if len(os.Args) != 4 {
+	if len(os.Args) != 5 {
 		fmt.Println(len(os.Args))
-		fmt.Println("Generates a png. \n Need to call with: path of image\n path of new image\n probability of block")
+		fmt.Println("Generates a png. \n Need to call with: path of image\n path of new image\n probability of block \n size of square")
 	}
 	old := os.Args[1]
 	new := os.Args[2]
 	p, err := strconv.Atoi(os.Args[3])
+	if err != nil {
+		log.Fatal(err)
+	}
+	size, err := strconv.Atoi(os.Args[4])
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -37,16 +41,16 @@ func main() {
 		log.Fatal(err)
 	}
 
-	resultImage, err := transformImage(sourceImage, p)
+	resultImage, err := transformImage(sourceImage, p, size)
 	if err != nil {
 		log.Fatal(err)
 	}
 	png.Encode(w, resultImage)
 }
 
-func transformImage(img image.Image, p int) (image.Image, error) {
+func transformImage(img image.Image, p int, size int) (image.Image, error) {
 	output := image.NewRGBA(img.Bounds())
-	rectangles := splitSquare(img.Bounds(), 60)
+	rectangles := splitSquare(img.Bounds(), size)
 	draw.Draw(output, output.Bounds(), img, image.ZP, draw.Src)
 	for _, r := range rectangles {
 		if rand.Intn(p+1) == 0 {
